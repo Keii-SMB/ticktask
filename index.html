@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TickTask | Productivity Dashboard</title>
+    <meta name="description" content="A beautiful productivity dashboard with liquid glass macOS aesthetic">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css?v=84">
+    <link rel="stylesheet" href="css/widgets.css?v=83">
+    <link rel="stylesheet" href="css/components.css?v=84">
+    <link rel="stylesheet" href="css/login.css?v=80">
+</head>
+
+<body>
+    <div class="background-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <div class="brand-logo glass">
+        <span class="brand-text">TickTask</span>
+    </div>
+
+    <nav class="dock" id="dock">
+        <div class="dock-container glass">
+            <button class="dock-item active" data-tool="calculator" title="Calculator"><i
+                    data-lucide="calculator"></i></button>
+            <button class="dock-item" data-tool="notepad" title="Notepad"><i data-lucide="file-text"></i></button>
+            <button class="dock-item" data-tool="sticky-notes" title="Sticky Notes"><i
+                    data-lucide="sticky-note"></i></button>
+            <button class="dock-item" data-tool="todo" title="To-Do List"><i data-lucide="check-square"></i></button>
+            <button class="dock-item" data-tool="pomodoro" title="Pomodoro"><i data-lucide="timer"></i></button>
+            <div class="dock-separator"></div>
+            <button class="dock-item" data-tool="world-clock" title="World Clock"><i data-lucide="globe"></i></button>
+            <button class="dock-item" data-tool="calendar" title="Calendar"><i data-lucide="calendar"></i></button>
+            <button class="dock-item" data-tool="currency" title="Currency"><i data-lucide="coins"></i></button>
+            <div class="dock-separator"></div>
+
+            <button class="dock-item" data-tool="quick-links" title="Quick Links"><i data-lucide="link"></i></button>
+        </div>
+    </nav>
+
+    <main class="main-content" id="main-content"></main>
+    <div id="modals-container"></div>
+    <!-- Firebase SDK (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/widgets.js?v=29"></script>
+    <script src="js/app.js?v=35"></script>
+
+    <!-- Phone Auth Recaptcha -->
+    <div id="recaptcha-container"></div>
+</body>
+
+</html>

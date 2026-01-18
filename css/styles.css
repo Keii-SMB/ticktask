@@ -1,0 +1,857 @@
+/* ========================================
+   Daily Hub - Liquid Glass Design System
+   ======================================== */
+/* Imports handled in HTML for cache busting */
+
+/* CSS Variables */
+:root {
+    /* Colors */
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #12121a;
+    --bg-glass: rgba(255, 255, 255, 0.05);
+    --bg-glass-hover: rgba(255, 255, 255, 0.1);
+    --bg-glass-active: rgba(255, 255, 255, 0.15);
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --border-glass-hover: rgba(255, 255, 255, 0.2);
+
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --text-muted: rgba(255, 255, 255, 0.4);
+
+    --accent: #007AFF;
+    --accent-hover: #0a84ff;
+    --accent-glow: rgba(0, 122, 255, 0.3);
+
+    --success: #30d158;
+    --warning: #ff9f0a;
+    --danger: #ff453a;
+
+    /* Spacing */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 40px var(--accent-glow);
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Blur */
+    --blur-sm: 10px;
+    --blur-md: 20px;
+    --blur-lg: 40px;
+}
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+/* General UI Transitions for smooth size/state changes */
+button,
+.btn,
+.icon-btn,
+.dock-item,
+.tag-btn,
+.note-item,
+.folder-accordion,
+.sticky-note,
+.todo-item,
+.quick-link,
+.pomo-tab,
+.pomo-btn,
+.modal-submit,
+.toolbar-btn {
+    transition: all var(--transition-fast);
+}
+
+/* Smooth height/size transitions for containers */
+.panel-content,
+.notes-sidebar,
+.note-editor,
+.sticky-notes-container,
+.todo-list,
+.quick-links-grid {
+    transition: height 0.3s ease-out, max-height 0.3s ease-out;
+}
+
+/* Scale animations on hover for interactive elements */
+.note-item:hover,
+.sticky-note:hover,
+.quick-link:hover {
+    transform: translateY(-2px);
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Slide up animation */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Slide down animation */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Background Animation */
+.background-animation {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: float 20s ease-in-out infinite;
+}
+
+.orb-1 {
+    width: 600px;
+    height: 600px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    top: -200px;
+    left: -100px;
+    animation-delay: 0s;
+}
+
+.orb-2 {
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    top: 50%;
+    right: -150px;
+    animation-delay: -7s;
+}
+
+.orb-3 {
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    bottom: -100px;
+    left: 30%;
+    animation-delay: -14s;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    25% {
+        transform: translate(50px, -50px) scale(1.1);
+    }
+
+    50% {
+        transform: translate(-30px, 30px) scale(0.95);
+    }
+
+    75% {
+        transform: translate(-50px, -20px) scale(1.05);
+    }
+}
+
+/* Glass Effect */
+.glass {
+    background: var(--bg-glass);
+    backdrop-filter: blur(var(--blur-md));
+    -webkit-backdrop-filter: blur(var(--blur-md));
+    border: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-md);
+}
+
+.glass-light {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(var(--blur-sm));
+    -webkit-backdrop-filter: blur(var(--blur-sm));
+    border: 1px solid var(--border-glass);
+}
+
+/* Brand Logo */
+.brand-logo {
+    position: fixed;
+    top: var(--space-lg);
+    left: var(--space-lg);
+    z-index: 1000;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-xl);
+}
+
+.brand-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+}
+
+/* Navigation Dock */
+.dock {
+    position: fixed;
+    top: var(--space-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.dock-container {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-xl);
+}
+
+.dock-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    /* Restored layout size */
+    height: 48px;
+    /* Restored layout size */
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    position: relative;
+    isolation: isolate;
+    /* Create stacking context for pseudo-elements */
+}
+
+/* Use pseudo-element for the background to keep it smaller than the layout box */
+.dock-item::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    /* Creates the 40px visual size (48 - 8) */
+    background: transparent;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+    z-index: -1;
+    /* Behind icon */
+}
+
+.dock-item:hover {
+    color: var(--text-primary);
+    transform: translateY(-4px) scale(1.1);
+}
+
+/* Apply background to pseudo-element instead */
+.dock-item:hover::before {
+    background: var(--bg-glass-hover);
+}
+
+.dock-item.active {
+    color: var(--accent);
+}
+
+.dock-item.active::before {
+    background: var(--bg-glass-active);
+}
+
+.dock-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    /* Perfectly centered (4px gap above, 4px gap below) */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 4px var(--accent-glow);
+}
+
+.dock-item i,
+.dock-item svg {
+    width: 24px;
+    height: 24px;
+}
+
+.dock-separator {
+    width: 1px;
+    height: 32px;
+    background: var(--border-glass);
+    margin: 0 var(--space-xs);
+}
+
+/* Main Content */
+.main-content {
+    padding-top: 120px;
+    padding-bottom: var(--space-2xl);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Tool Panels */
+.tool-panel {
+    display: none;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 var(--space-lg);
+    padding: var(--space-xl);
+    border-radius: var(--radius-xl);
+}
+
+.tool-panel.active {
+    display: block;
+    animation: panelFadeIn 0.3s ease-out;
+}
+
+@keyframes panelFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tool-panel.wide {
+    max-width: 1000px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.panel-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Icon Button */
+.icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: var(--bg-glass);
+    color: var(--text-secondary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.icon-btn:hover {
+    background: var(--bg-glass-hover);
+    color: var(--text-primary);
+}
+
+.icon-btn i,
+.icon-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    /* FIX: Must be higher than #notepad-panel (99999) */
+    z-index: 100000;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn var(--transition-fast);
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 420px;
+    padding: var(--space-xl);
+    border-radius: var(--radius-xl);
+    animation: slideUp var(--transition-normal);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-lg);
+}
+
+.modal-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: var(--space-xs);
+    transition: color var(--transition-fast);
+}
+
+.modal-close:hover {
+    color: var(--text-primary);
+}
+
+.modal-input {
+    width: 100%;
+    padding: var(--space-md);
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin-bottom: var(--space-md);
+    transition: border-color var(--transition-fast);
+}
+
+.modal-input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.modal-input::placeholder {
+    color: var(--text-muted);
+}
+
+.modal-submit {
+    width: 100%;
+    padding: var(--space-md);
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius-md);
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.modal-submit:hover {
+    background: var(--accent-hover);
+    box-shadow: var(--shadow-glow);
+}
+
+/* Confirm Modal - Liquid Glass Style */
+.confirm-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--space-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 107, 107, 0.15);
+    border-radius: 50%;
+    padding: var(--space-md);
+}
+
+.confirm-icon i,
+.confirm-icon svg {
+    width: 32px;
+    height: 32px;
+    color: #ff6b6b;
+}
+
+.confirm-buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+}
+
+.confirm-buttons .modal-submit {
+    width: auto;
+    min-width: 100px;
+    padding: var(--space-sm) var(--space-lg);
+}
+
+.modal-submit.danger {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+}
+
+.modal-submit.danger:hover {
+    background: linear-gradient(135deg, #ff5555, #dd4444);
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
+}
+
+.modal-submit.secondary {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    color: var(--text-primary);
+}
+
+.modal-submit.secondary:hover {
+    background: var(--bg-glass-hover);
+    box-shadow: none;
+}
+
+/* Folder Modal */
+.folder-icon-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--space-lg);
+    background: linear-gradient(135deg, rgba(0, 122, 255, 0.2), rgba(88, 86, 214, 0.2));
+    border: 2px solid var(--accent);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 0 20px rgba(0, 122, 255, 0.3);
+}
+
+.folder-icon-preview i,
+.folder-icon-preview svg {
+    width: 40px;
+    height: 40px;
+    color: var(--accent);
+}
+
+/* Confirm Modal */
+.confirm-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto var(--space-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 69, 58, 0.15);
+    border-radius: 50%;
+}
+
+.confirm-icon i,
+.confirm-icon svg {
+    width: 30px;
+    height: 30px;
+    color: var(--danger);
+}
+
+.confirm-buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+}
+
+.confirm-buttons .modal-submit {
+    flex: 1;
+    max-width: 140px;
+}
+
+.modal-submit.danger {
+    background: var(--danger);
+}
+
+.modal-submit.danger:hover {
+    background: #ff6b6b;
+}
+
+.modal-submit.secondary {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+}
+
+.modal-submit.secondary:hover {
+    background: var(--bg-glass-hover);
+}
+
+/* Smooth Scrolling - DISABLED for programmatic scroll compatibility */
+/* * { scroll-behavior: smooth; } */
+
+/* Hide all scrollbars but keep scroll functionality */
+* {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+}
+
+/* Selection */
+::selection {
+    background: var(--accent);
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dock-container {
+        padding: var(--space-xs) var(--space-sm);
+        gap: var(--space-xs);
+    }
+
+    .dock-item {
+        width: 40px;
+        height: 40px;
+    }
+
+    .dock-item i,
+    .dock-item svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .tool-panel {
+        margin: 0 var(--space-md);
+        padding: var(--space-lg);
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* KILL HORIZONTAL SCROLL */
+    html,
+    body {
+        overflow-x: hidden !important;
+        width: 100vw !important;
+        position: relative;
+    }
+
+    .dock {
+        /* FIXED FLOATING PILL PRESET */
+        position: fixed !important;
+        top: auto;
+        bottom: 20px !important;
+        /* Float above bottom */
+        left: 50% !important;
+        transform: translateX(-50%) translateZ(0) !important;
+        /* Centered & GPU */
+
+        width: fit-content !important;
+        /* SHRINK TO FIT ICONS */
+        min-width: 280px !important;
+        max-width: 95% !important;
+        height: auto;
+
+        border-radius: 50px;
+        /* Fully Rounded Pill */
+        border: 1px solid rgba(255, 255, 255, 0.12);
+
+        padding: 10px 20px;
+
+        /* ULTRA GLASS STYLE */
+        background: rgba(15, 15, 20, 0.5) !important;
+        backdrop-filter: blur(25px) saturate(180%);
+        -webkit-backdrop-filter: blur(25px) saturate(180%);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+
+        z-index: 99999;
+    }
+
+    .dock-container {
+        justify-content: space-between;
+        /* Spread items nicely */
+        overflow-x: auto;
+        padding: 0 4px;
+        gap: 2px;
+        width: 100%;
+        mask-image: none;
+    }
+
+    .dock-item {
+        width: 44px !important;
+        height: 44px !important;
+        min-width: 44px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+        border-radius: 12px !important;
+        background: transparent !important;
+        /* Clean look */
+        border: 1px solid transparent !important;
+        transition: all 0.2s ease !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: relative !important;
+    }
+
+    .dock-item.active {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        transform: translateY(-4px) !important;
+    }
+
+    /* Dot Indicator */
+    .dock-item.active::after {
+        content: '';
+        position: absolute;
+        bottom: 2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 8px var(--accent);
+    }
+
+    .dock-item.active i,
+    .dock-item.active svg {
+        color: var(--accent) !important;
+        filter: drop-shadow(0 0 8px var(--accent-glow)) !important;
+        transform: scale(1.1);
+    }
+
+    /* HIDE LABELS ON MOBILE */
+    .dock-item span:not(.tooltip) {
+        display: none !important;
+    }
+
+    .dock-item i,
+    .dock-item svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .main-content {
+        padding-top: 90px !important;
+        /* TIGHTER GAP */
+        padding-bottom: 120px !important;
+        /* Space for Floating Dock */
+        overflow-x: hidden !important;
+    }
+
+    /* AGGRESSIVE GLOBAL SCALING */
+    html {
+        font-size: 11px;
+    }
+
+    .brand-logo {
+        position: fixed;
+        padding: 8px 20px;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: fit-content;
+        z-index: 99990;
+
+        background: rgba(15, 15, 20, 0.5);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .brand-text {
+        font-size: 1.2rem;
+        letter-spacing: 0.5px;
+    }
+}
